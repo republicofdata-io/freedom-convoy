@@ -1,0 +1,8 @@
+boundary_id,category,pattern,notes
+freedom_convoy,core_phrase,freedom convoy,Primary movement label.
+freedom_convoy,core_phrase,trucker convoy,Common descriptive label.
+freedom_convoy,issue_phrase,vaccine mandate,Core grievance and media frame.
+freedom_convoy,place,ottawa,"Primary occupation site; match is contextual, not sufficient alone."
+freedom_convoy,place,windsor,"Ambassador Bridge blockade site; match is contextual, not sufficient alone."
+freedom_convoy,place,coutts,"Alberta border blockade site; match is contextual, not sufficient alone."
+freedom_convoy,actor,truckers,"Common actor label; match is contextual, not sufficient alone."

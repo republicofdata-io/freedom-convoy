@@ -1,0 +1,7 @@
+freedom_convoy:
+  target: dev
+  outputs:
+    dev:
+      type: duckdb
+      path: data/freedom_convoy.duckdb
+      threads: 4

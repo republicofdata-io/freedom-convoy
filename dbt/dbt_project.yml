@@ -1,0 +1,32 @@
+name: freedom_convoy
+version: '1.0.0'
+config-version: 2
+
+profile: freedom_convoy
+
+model-paths: ["models"]
+seed-paths: ["seeds"]
+macro-paths: ["macros"]
+test-paths: ["tests"]
+
+clean-targets:
+  - target
+  - dbt_packages
+
+vars:
+  raw_parquet_root: "data/parquet/raw"
+  expected_start_date: "2021-12-01"
+  expected_end_date: "2022-03-31"
+
+models:
+  freedom_convoy:
+    sources:
+      +materialized: view
+      +schema: raw
+    staging:
+      +materialized: view
+      +schema: staging
+
+seeds:
+  freedom_convoy:
+    +schema: config
