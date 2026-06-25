@@ -93,12 +93,21 @@ transcripts/   Manual run transcripts and run metadata
 
 Raw and derived GDELT data are intentionally excluded from Git. The target extraction window is `2021-12-01` through `2022-03-31`, covering buildup, Ottawa occupation, border blockades, emergency response, clearance, and immediate aftermath.
 
-Ticket 02 adds reproducible extraction commands for:
+Ticket 02 adds a `uv`-managed extraction substrate with Make commands:
 
-- dry-run BigQuery cost estimation via `make cost-window`;
-- local Parquet backfill via `make backfill-window`;
-- configurable convoy-candidate extraction boundary in `config/gdelt_candidate.yaml`;
-- extraction logs under `data/logs/`.
+```bash
+make help
+make install
+make cost-day DATE=2022-02-14
+make cost-month MONTH=2022-02
+make cost-window
+make backfill-day DATE=2022-02-14
+make backfill-month MONTH=2022-02
+make backfill-range START=2022-02-01 END=2022-02-07
+make backfill-window
+```
+
+The `cost-*` commands are free BigQuery dry runs. The `backfill-*` commands are billed and should be run only after reviewing dry-run estimates. Outputs are local, gitignored Parquet partitions under `data/parquet/raw/`, with extraction logs under `data/logs/`. The convoy-candidate boundary is configured in `config/gdelt_candidate.yaml`.
 
 Later tickets will add reproducible commands for:
 
