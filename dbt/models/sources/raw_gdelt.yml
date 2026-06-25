@@ -1,0 +1,24 @@
+version: 2
+
+models:
+  - name: raw_gdelt__gkg
+    description: Raw candidate GDELT GKG article/document metadata read from local partitioned Parquet.
+    columns:
+      - name: gkg_record_id
+        tests: [not_null]
+      - name: event_date
+        tests: [not_null]
+  - name: raw_gdelt__events
+    description: Raw candidate GDELT Events read from local partitioned Parquet.
+    columns:
+      - name: global_event_id
+        tests: [not_null]
+      - name: event_date
+        tests: [not_null]
+  - name: raw_gdelt__mentions
+    description: Raw candidate GDELT Event Mentions read from local partitioned Parquet.
+    columns:
+      - name: global_event_id
+        tests: [not_null]
+      - name: event_date
+        tests: [not_null]

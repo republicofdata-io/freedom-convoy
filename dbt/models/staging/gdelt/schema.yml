@@ -1,0 +1,78 @@
+version: 2
+
+models:
+  - name: stg_gdelt__gkg
+    description: Stable article/document-level GDELT GKG staging view for convoy-candidate records.
+    tests:
+      - min_row_count:
+          arguments:
+            minimum: 1
+      - date_coverage:
+          config:
+            severity: warn
+          arguments:
+            column_name: event_date
+            start_date: "{{ var('expected_start_date') }}"
+            end_date: "{{ var('expected_end_date') }}"
+    columns:
+      - name: gkg_record_id
+        tests: [not_null, unique]
+      - name: document_url
+        tests: [not_null]
+      - name: event_date
+        tests: [not_null]
+      - name: source_common_name
+        tests: [not_null]
+
+  - name: stg_gdelt__events
+    description: Stable event-level GDELT Events staging view for convoy-candidate records.
+    tests:
+      - min_row_count:
+          arguments:
+            minimum: 1
+      - date_coverage:
+          config:
+            severity: warn
+          arguments:
+            column_name: event_date
+            start_date: "{{ var('expected_start_date') }}"
+            end_date: "{{ var('expected_end_date') }}"
+    columns:
+      - name: global_event_id
+        tests: [not_null, unique]
+      - name: event_date
+        tests: [not_null]
+      - name: event_code
+        tests: [not_null]
+      - name: source_url
+        tests: [not_null]
+
+  - name: stg_gdelt__mentions
+    description: Stable mention-level GDELT Event Mentions staging view for convoy-candidate records.
+    tests:
+      - min_row_count:
+          arguments:
+            minimum: 1
+      - date_coverage:
+          config:
+            severity: warn
+          arguments:
+            column_name: event_date
+            start_date: "{{ var('expected_start_date') }}"
+            end_date: "{{ var('expected_end_date') }}"
+    columns:
+      - name: global_event_id
+        tests:
+          - not_null
+          - relationships_where_present:
+              config:
+                severity: warn
+              arguments:
+                to: ref('stg_gdelt__events')
+                field: global_event_id
+      - name: event_date
+        tests: [not_null]
+      - name: mention_identifier
+        tests: [not_null]
+      - name: mention_source_name
+        tests: [not_null]

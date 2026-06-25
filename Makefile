@@ -1,6 +1,6 @@
 .DEFAULT_GOAL := help
 
-.PHONY: help install cost-day cost-month cost-window backfill-day backfill-month backfill-range backfill-window
+.PHONY: help install cost-day cost-month cost-window backfill-day backfill-month backfill-range backfill-window dbt-build dbt-test dbt-docs-generate duckdb-ui
 
 help: ## Show this menu
 	@echo "Freedom Convoy GDELT extraction commands:"
@@ -30,3 +30,15 @@ backfill-range: ## BILLED: extract range: START=2022-02-01 END=2022-02-07
 
 backfill-window: ## BILLED: extract full window
 	uv run python scripts/backfill.py --window
+
+dbt-build: ## Build DuckDB/dbt staging layer
+	uv run dbt build --project-dir dbt --profiles-dir dbt
+
+dbt-test: ## Run dbt tests only
+	uv run dbt test --project-dir dbt --profiles-dir dbt
+
+dbt-docs-generate: ## Generate dbt docs metadata
+	uv run dbt docs generate --project-dir dbt --profiles-dir dbt
+
+duckdb-ui: ## Open DuckDB UI for the local staged database; keep this terminal open
+	uv run duckdb -ui -interactive data/freedom_convoy.duckdb
