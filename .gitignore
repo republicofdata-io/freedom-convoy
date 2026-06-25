@@ -13,6 +13,8 @@ venv/
 data/parquet/
 data/raw/
 data/processed/
+data/logs/
+tmp/
 *.duckdb
 *.duckdb.wal
 *.parquet

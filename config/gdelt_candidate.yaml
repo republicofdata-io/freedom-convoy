@@ -1,0 +1,31 @@
+# Convoy candidate net — extraction-layer boundary (recall-oriented).
+# Precise movement classification happens later in dbt/profiling; do not use
+# this as ground truth for the movement itself.
+
+window:
+  start: "2021-12-01"
+  end: "2022-03-31"
+
+gkg:
+  # GDELT GKG SourceCollectionIdentifier 1 = web news.
+  source_collection_id: 1
+
+# Case-insensitive RE2 alternatives matched against GKG entity/theme/url text.
+# Bare "convoy" is excluded to avoid military/aid false positives.
+convoy_patterns:
+  - "freedom[ -]?convoy"
+  - "trucker[s]?[ -](convoy|protest|for[ -]freedom)"
+  - "convoy[ -](protest|ottawa|canada|border|blockade)"
+  - "coutts"
+  - "ambassador[ -]bridge"
+  - "emergencies[ -]act"
+  - "tamara[ -]lich"
+  - "pat[ -]king"
+  - "chris[ -]barber"
+  - "benjamin[ -]dichter"
+
+notes: >
+  CAMEO event codes and geography are intentionally not filtered at extraction.
+  Events and mentions are anchored to convoy-candidate GKG document URLs so later
+  profiling can separate convoy core, adjacent politics, state response,
+  counter-protest, and media amplification.
