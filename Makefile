@@ -1,6 +1,6 @@
 .DEFAULT_GOAL := help
 
-.PHONY: help install cost-day cost-month cost-window backfill-day backfill-month backfill-range backfill-window dbt-build dbt-test dbt-docs-generate duckdb-ui
+.PHONY: help install cost-day cost-month cost-window backfill-day backfill-month backfill-range backfill-window dbt-build dbt-test dbt-docs-generate duckdb-ui marimo-observation observation-summaries
 
 help: ## Show this menu
 	@echo "Freedom Convoy GDELT extraction commands:"
@@ -42,3 +42,9 @@ dbt-docs-generate: ## Generate dbt docs metadata
 
 duckdb-ui: ## Open DuckDB UI for the local staged database; keep this terminal open
 	uv run duckdb -ui -interactive data/freedom_convoy.duckdb
+
+marimo-observation: ## Run the observation-layer profiling Marimo app
+	uv run marimo edit marimo/observation_layer_profile.py
+
+observation-summaries: ## Export observation-layer summary CSVs for scoring/final artifact
+	uv run python scripts/export_observation_summaries.py
