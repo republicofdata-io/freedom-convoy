@@ -115,6 +115,40 @@ Later tickets will add reproducible commands for:
 - Marimo profiling;
 - final comparison artifact generation.
 
+## Rouleau Commission facts database (ground truth)
+
+The experiment's ground-truth oracle is built from the factual-narrative
+chapters of the Public Order Emergency Commission (Rouleau Commission) final
+report — Vol 2 Ch 5–13 and Vol 3 Ch 14–16 (~470 evidentiary pages). The
+Commissioner's findings (Vol 3 Ch 17) and recommendations (Ch 18) are excluded
+by construction, as are Vols 1, 4, and 5.
+
+Pipeline (`src/freedom_convoy_rouleau/`, config in `config/rouleau_*.yaml`):
+
+```bash
+make rouleau-corpus            # page-anchored text corpus from the report PDFs
+make rouleau-extract           # BILLED: LLM extraction (OpenRouter; see .env.example)
+make rouleau-verify            # 100% source_quote-vs-page citation verification
+make rouleau-resolve           # entity resolution → semantic-model parquet tables
+make rouleau-load              # load into DuckDB (rouleau schema) + FK checks
+make rouleau-sample            # stratified sample CSV for human spot-checking
+```
+
+Key properties:
+
+- **Citations are pipeline metadata, never model output.** Extraction runs one
+  page at a time; volume/chapter/page are stapled on afterwards. Every record
+  carries a verbatim `source_quote` that is automatically verified as a
+  substring of the cited page; failures are quarantined, not shipped.
+- **Evidentiary-only via three layers:** chapter scoping, prompt instruction,
+  and a conclusion-marker QA scan.
+- **GDELT-joinable, not GDELT-keyed:** locations carry lat/long + FIPS ADM1
+  codes and actors a CAMEO type crosswalk; the join is date + geography
+  alignment (see `sql/rouleau_gdelt_join.sql`).
+
+The report PDFs are downloaded to `data/raw/rouleau/` (gitignored); SHA-256
+checksums are committed in `config/rouleau_checksums.sha256` for verification.
+
 ## What this project does not claim
 
 - It does not take a political position on the Freedom Convoy.

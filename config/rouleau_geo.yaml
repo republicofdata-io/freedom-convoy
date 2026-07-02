@@ -1,0 +1,21 @@
+# Geo anchors for GDELT join compatibility: lat/long centroids for the
+# movement's anchor locations. Province → FIPS10-4 ADM1 mapping is derived in
+# code (ON→CA08 etc.); lat/long here is only for locations we can anchor
+# confidently. Others keep null coordinates and join on ADM1 + date.
+
+anchors:
+  Ottawa:            {latitude: 45.4215, longitude: -75.6972, city: Ottawa, province: "ON"}
+  Parliament Hill:   {latitude: 45.4236, longitude: -75.7009, city: Ottawa, province: "ON"}
+  Wellington Street: {latitude: 45.4231, longitude: -75.7003, city: Ottawa, province: "ON"}
+  Rideau Street:     {latitude: 45.4261, longitude: -75.6892, city: Ottawa, province: "ON"}
+  Coventry Road:     {latitude: 45.4139, longitude: -75.6435, city: Ottawa, province: "ON"}
+  Windsor:           {latitude: 42.3149, longitude: -83.0364, city: Windsor, province: "ON"}
+  Ambassador Bridge: {latitude: 42.3123, longitude: -83.0742, city: Windsor, province: "ON"}
+  Coutts:            {latitude: 49.0000, longitude: -111.9557, city: Coutts, province: "AB"}
+  Emerson:           {latitude: 49.0007, longitude: -97.2077, city: Emerson, province: "MB"}
+  Pacific Highway:   {latitude: 49.0034, longitude: -122.7350, city: Surrey, province: "BC"}
+  Toronto:           {latitude: 43.6532, longitude: -79.3832, city: Toronto, province: "ON"}
+  Quebec City:       {latitude: 46.8131, longitude: -71.2075, city: Quebec City, province: "QC"}
+  Winnipeg:          {latitude: 49.8954, longitude: -97.1385, city: Winnipeg, province: "MB"}
+  Edmonton:          {latitude: 53.5461, longitude: -113.4937, city: Edmonton, province: "AB"}
+  Vancouver:         {latitude: 49.2827, longitude: -123.1207, city: Vancouver, province: "BC"}
